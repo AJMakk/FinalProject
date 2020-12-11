@@ -8,7 +8,7 @@ use App\Models\User;
 use Laravel\Passport\Passport;
 
 
-class AuthController extends Controller
+class CustomerAuthController extends Controller
 {
     public function register(Request $request)
     {
@@ -22,7 +22,10 @@ class AuthController extends Controller
 
         $validatedData['password'] = bcrypt($request->password);
 
+
         $user = User::create($validatedData);
+
+        $user->attachRole($customer);
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
