@@ -25,7 +25,7 @@ class CustomerAuthController extends Controller
 
         $user = User::create($validatedData);
 
-        $user->attachRole($customer);
+        /* $user->attachRole($customer); */
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
