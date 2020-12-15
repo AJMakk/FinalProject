@@ -1,35 +1,41 @@
+import '../../../CSS/register.css';
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import AppContainer from '../../containers/AppContainer';
+import FormContainer from '../../containers/FormContainer';
 import api from '../../../api';
+import Button from '@material-ui/core/Button';
+
 
 
 export default function Register() {
     const history = useHistory();
-    const [loading, setLoading] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [cityId, setCityId] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [submitting, setSubmitting] = useState(false);
 
-    const onAddSubmit = async () => {
-        setLoading(true);
-        try {
-            await api.register({
-                firstName, lastName, cityId, email, password, confirmPassword
-            });
-            history.push('/')
-        }catch {
-            alert('Failed to Register');
-        } finally {
-            setLoading(false);
-        }
-    };
+    const handleSubmit = async () => {
+       setSubmitting(true);
+       try {
+        await api.register({
+            firstName, lastName, cityId, email, password, confirmPassword
+        });
+        history.push('/')
+    }catch {
+        alert('Failed to Register');
+    } finally {
+        setSubmitting(false);
+    }
+       setTimeout(() => {
+         setSubmitting(false);
+       }, 3000)
+     }
 
-    return (
-        <AppContainer title="Enter Your Information">
+    return(
+        <FormContainer title="Register" >
         <form>
             <div className="form-group">
                 <label>First Name</label>
@@ -83,12 +89,14 @@ export default function Register() {
                 <button
                 type="button"
                 className="btn btn-success"
-                onClick={onAddSubmit}
-                disabled={loading}>
-                    {loading? 'REGISTERING...' : 'Register'}
+                onClick={handleSubmit}
+                disabled={submitting}>
+                    {submitting? 'REGISTERING...' : 'Register'}
                 </button>
             </div>
         </form>
-        </AppContainer>
-    );
+        
+        </FormContainer>
+      )
+   
 };
