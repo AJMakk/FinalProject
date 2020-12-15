@@ -1,6 +1,7 @@
-import './App.css';
 import React from 'react';
-import guestHeader from './components/headers/guestHeader';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from './theme';
 
 import {
   BrowserRouter as Router,
@@ -8,30 +9,46 @@ import {
   Route,
 } from 'react-router-dom';
 
+import GuestHeader from './components/headers/guestHeader';
+import CustomerHeader from './components/headers/customerHeader';
 
 import Login from './components/pages/logInPage';
 import Register from './components/pages/customers/registerPage';
 import Logout from './components/pages/logout';
+import Home from './components/pages/homePage';
+
+
+function Header() {
+   if (!localStorage.getItem('AccessToken'))
+   {
+     return <GuestHeader />;
+   }
+   return <CustomerHeader />;
+ }
 
 function App() {
   return (
-    <Router className="App__Container">
-      <guestHeader/>
-        <Switch>
+   <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router className="App__Container">
+         <Header />
+            <Switch>
+               <Route exact path="/">
+                  <Home></Home>
+               </Route>
+               <Route exact path="/login">
+                  <Login></Login>
+               </Route>
+               <Route exact path="/register">
+                  <Register></Register>
+               </Route>
+               <Route exact path="/logout">
+                  <Logout></Logout>
+               </Route>
+            </Switch>
+      </Router>
+   </ThemeProvider>
 
-            <Route exact path="/">
-               <Login></Login>
-            </Route>
-            <Route exact path="/register">
-               <Register></Register>
-            </Route>
-            <Route exact path="/logout">
-               <Logout></Logout>
-            </Route>
-
-        </Switch>
-
-    </Router>
 );
 }
 
