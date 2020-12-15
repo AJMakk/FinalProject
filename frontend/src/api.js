@@ -15,7 +15,9 @@ export default {
         axios.post(`${BASE_API_URL}/login`, loginCredentials),
 
     register: (newUserInfo) =>
-        axios.post(`${BASE_API_URL}/register`,{name:newUserInfo.name, email:newUserInfo.email, password:newUserInfo.password, password_confirmation:newUserInfo.confirmPassword}),
+        axios.post(`${BASE_API_URL}/register`,{first_name:newUserInfo.firstName,
+             last_name:newUserInfo.lastName,city_id:newUserInfo.cityId, email:newUserInfo.email,
+             password:newUserInfo.password, password_confirmation:newUserInfo.confirmPassword}),
 
     logout: () =>
         axios.get(`${BASE_API_URL}/logout`),
