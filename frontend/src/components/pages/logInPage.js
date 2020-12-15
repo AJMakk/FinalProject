@@ -3,6 +3,8 @@ import {useHistory} from 'react-router-dom';
 import AppContainer from '../containers/AppContainer.js';
 import api from '../../api';
 import {Link} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 
 
 export default function Login() {
@@ -28,7 +30,7 @@ export default function Login() {
                     localStorage.setItem('AccessToken', res.data.access_token);
                     localStorage.setItem('UsersName', res.data.user.name);
                     console.log("res: ",res.data.access_token);
-                    history.push('/home');
+                    history.push('/');
                     window.location.reload();
                 }
             });
@@ -66,19 +68,21 @@ export default function Login() {
                 />
             </div>
             <div className="form-group">
-                <button
+                <Button
                 type="button"
+                variant="contained" 
+                color="primary"
                 className="btn btn-success"
                 onClick={onAddSubmit}
                 disabled={loading}>
                     {loading? 'Logging in...' : 'Log in'}
-                </button>
+                </Button>
             </div>
             <div className="form-group">
                 <Link
                     className="btn btn-register"
                     to={`/register`}>
-                    Register
+                   Don't have an account? Register!
                 </Link>
             </div>
             
