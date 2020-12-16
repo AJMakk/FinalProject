@@ -12,10 +12,10 @@ import {
 import GuestHeader from './components/headers/guestHeader';
 import CustomerHeader from './components/headers/customerHeader';
 
-import Login from './components/pages/logInPage';
-import Register from './components/pages/customers/registerPage';
-import Logout from './components/pages/logout';
-import Home from './components/pages/homePage';
+import Login from './components/pages/logIn';
+import Register from './components/pages/customers/register';
+import Logout from './components/pages/logOut';
+import Home from './components/pages/home';
 
 
 function Header() {
