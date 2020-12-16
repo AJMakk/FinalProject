@@ -10,7 +10,7 @@ import {
 
 const useStyles = makeStyles(() => ({
   header: {
-     backgroundColor: "#400CCC",
+     backgroundColor: "#698736",
      paddingRight: "79px",
      paddingLeft: "118px",
   },
@@ -21,6 +21,10 @@ const useStyles = makeStyles(() => ({
     color: "#FFFEFE",
     textAlign: "left",
   },
+
+ /*  logo: {
+    maxWidth: 200,
+  }, */
 
   menuButton: {
     fontFamily: "Open Sans, sans-serif",
@@ -37,10 +41,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const guestHeaderData = [
-  {
-    label: "Home",
-    href: "/",
-  },
+  
   {
     label: "Search For Technicians",
     href: "/search",
@@ -65,7 +66,19 @@ export default function GuestHeader() {
   const displayDesktop = () => {
     return (
        <Toolbar className={toolbar}>
-       {TechieFindLogo}
+       <Button
+          {...{
+            key: "logoHome",
+            color:"inherit",
+            to: "/",
+            component: RouterLink,
+            className: logo
+          }} 
+        >
+        {TechieFindLogo}
+        {/* <img src="TFlogo.png" alt="logo"  /> */}
+        </Button>
+       
        <div>{getMenuButtons()}</div>
        </Toolbar>
     );
