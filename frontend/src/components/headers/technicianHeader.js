@@ -1,11 +1,113 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  makeStyles,
+  Button,
+ } from '@material-ui/core';
 
+const useStyles = makeStyles(() => ({
+  header: {
+     backgroundColor: "#400CCC",
+     paddingRight: "79px",
+     paddingLeft: "118px",
+  },
 
+  logo: {
+    fontFamily: "Work Sans, sans-serif",
+    fontWeight: 600,
+    color: "#FFFEFE",
+    textAlign: "left",
+  },
 
-function technicianHeader() {
+  menuButton: {
+    fontFamily: "Open Sans, sans-serif",
+    fontWeight: 700,
+    size: "18px",
+    marginLeft: "38px",
+  },
+
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
+}));
+
+const technicianHeaderData = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Schedule Management",
+    href: "/schedule",
+  },
+  {
+    label: "Help",
+    href: "/help",
+  },
+  {
+    label: "Notifications",
+    href: "/notifications",
+  },
+  {
+    label: "My Profile",
+    href: "/myprofile",
+  },
+  {
+    label: "Log Out",
+    href: "/logout",
+  },
+];
+
+export default function TechnicianHeader() {
+  const { header, logo, menuButton, toolbar } = useStyles();
+
+  const displayDesktop = () => {
+    return (
+       <Toolbar className={toolbar}>
+       {TechieFindLogo}
+       <div>{getMenuButtons()}</div>
+       </Toolbar>
+    );
+  };
+  
+  const TechieFindLogo = (
+    <Typography variant="h6" component="h1" className={logo}>
+      TechieFind
+    </Typography> 
+    );
+
+  const getMenuButtons = () => {
+    return technicianHeaderData.map(({label, href}) => {
+      return (
+        <Button
+          {...{
+            key: label,
+            color:"inherit",
+            to: href,
+            component: RouterLink,
+            className: menuButton
+          }} 
+        >
+        {label}
+        </Button>
+      );
+    });
+  };
+
   return (
-    <nav>
+    <header>
+      <AppBar className={header}>
+        {displayDesktop()}
+      </AppBar>
+    </header>
+  );
+}
+    /* <nav>
       <NavLink exact activeClassName="active"  to="/home">
         Home 
       </NavLink>
@@ -25,7 +127,5 @@ function technicianHeader() {
         My Profile
       </NavLink>
     </nav> 
-  );
+  ); */
  
-}
-export default technicianHeader;
