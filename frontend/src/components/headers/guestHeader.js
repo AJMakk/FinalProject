@@ -7,6 +7,7 @@ import {
   makeStyles,
   Button,
  } from '@material-ui/core';
+ import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -47,7 +48,7 @@ const guestHeaderData = [
     href: "/search",
   },
   {
-    label: "Help",
+    label: <HelpIcon ></HelpIcon>,
     href: "/help",
   },
   {
@@ -79,7 +80,9 @@ export default function GuestHeader() {
         {/* <img src="TFlogo.png" alt="logo"  /> */}
         </Button>
        
+        
        <div>{getMenuButtons()}</div>
+       
        </Toolbar>
     );
   };
@@ -106,7 +109,11 @@ export default function GuestHeader() {
         </Button>
       );
     });
+    
   };
+  
+        
+  
 
   return (
     <header>

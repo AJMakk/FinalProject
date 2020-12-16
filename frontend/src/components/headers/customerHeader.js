@@ -7,10 +7,13 @@ import {
   makeStyles,
   Button,
  } from '@material-ui/core';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles(() => ({
   header: {
-     backgroundColor: "#400CCC",
+     backgroundColor: "#698736",
      paddingRight: "79px",
      paddingLeft: "118px",
   },
@@ -38,23 +41,19 @@ const useStyles = makeStyles(() => ({
 
 const customerHeaderData = [
   {
-    label: "Home",
-    href: "/",
-  },
-  {
     label: "Search For Technicians",
     href: "/search",
   },
   {
-    label: "Help",
+    label: <HelpIcon ></HelpIcon>,
     href: "/help",
   },
   {
-    label: "Notifications",
+    label: <NotificationsIcon></NotificationsIcon>,
     href: "/notifications",
   },
   {
-    label: "My Profile",
+    label: <AccountCircleIcon></AccountCircleIcon>,
     href: "/myprofile",
   },
   {
@@ -68,10 +67,22 @@ export default function CustomerHeader() {
 
   const displayDesktop = () => {
     return (
-       <Toolbar className={toolbar}>
+      <Toolbar className={toolbar}>
+      <Button
+         {...{
+           key: "logoHome",
+           color:"inherit",
+           to: "/",
+           component: RouterLink,
+           className: logo
+         }} 
+       >
        {TechieFindLogo}
-       <div>{getMenuButtons()}</div>
-       </Toolbar>
+       {/* <img src="TFlogo.png" alt="logo"  /> */}
+       </Button>
+      
+      <div>{getMenuButtons()}</div>
+      </Toolbar>
     );
   };
   
