@@ -16,6 +16,7 @@ import Login from './components/pages/logIn';
 import Register from './components/pages/customers/register';
 import Logout from './components/pages/logOut';
 import Home from './components/pages/home';
+import SearchTable from './components/pages/customers/search/search';
 
 
 function Header() {
@@ -44,6 +45,9 @@ function App() {
                </Route>
                <Route exact path="/logout">
                   <Logout></Logout>
+               </Route>
+               <Route exact path="/search">
+                  <SearchTable></SearchTable>
                </Route>
             </Switch>
       </Router>
