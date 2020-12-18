@@ -59,6 +59,7 @@ export default function AsynchronousSearchCities({handleChange}) {
         <TextField
           {...params}
           label="Choose Your City"
+          size='small'
           required
           fullWidth
           variant="outlined"
