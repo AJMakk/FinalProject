@@ -1,19 +1,23 @@
-import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React, {useState} from "react";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import api from '../../api';
 import { 
   AppBar, 
   Toolbar, 
   Typography, 
   makeStyles,
   Button,
+  fade,
+  TextField,
  } from '@material-ui/core';
+ import SearchIcon from "@material-ui/icons/Search";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles(() => ({
   header: {
-     backgroundColor: "#698736",
+     background: "none",
      paddingRight: "79px",
      paddingLeft: "118px",
   },
@@ -21,15 +25,35 @@ const useStyles = makeStyles(() => ({
   logo: {
     fontFamily: "Work Sans, sans-serif",
     fontWeight: 600,
-    color: "#FFFEFE",
+    color: "black",
     textAlign: "left",
+  },
+
+  searchContainer: {
+    display: "flex",
+    backgroundColor: fade('#00000', 0.15),
+    paddingLeft: "20px",
+    paddingRight: "20px",
+    marginTop: "-15px",
+    marginBottom: "5px",
+  },
+
+  searchIcon: {
+    alignSelf: "flex-end",
+    marginBottom: "5px",
+    color:'#000000'
+  },
+
+  searchInput: {
+    width: "250px",
+    margin: "5px",
   },
 
   menuButton: {
     fontFamily: "Open Sans, sans-serif",
     fontWeight: 700,
     size: "18px",
-    marginLeft: "38px",
+    marginLeft: "20px",
   },
 
   toolbar: {
@@ -41,7 +65,7 @@ const useStyles = makeStyles(() => ({
 
 const customerHeaderData = [
   {
-    label: "Search For Technicians",
+    label: "All Technicians",
     href: "/search",
   },
   {
@@ -56,22 +80,40 @@ const customerHeaderData = [
     label: <AccountCircleIcon></AccountCircleIcon>,
     href: "/myprofile",
   },
-  {
-    label: "Log Out",
-    href: "/logout",
-  },
 ];
 
 export default function CustomerHeader() {
   const { header, logo, menuButton, toolbar } = useStyles();
+  const classes = useStyles();
+  const [filter, setFilter] = useState("");
 
+  let history = useHistory();
+
+  const handleSearchChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const handleLogout = () => {
+    api.logout().then(res => {
+      console.log("res: ",res);
+      
+      localStorage.removeItem('AccessToken');
+      localStorage.removeItem('UsersName');
+      localStorage.clear();
+
+      history.push("/");
+      window.location.reload();
+      alert(res.data.message) ;
+    });
+      
+}
   const displayDesktop = () => {
     return (
       <Toolbar className={toolbar}>
       <Button
          {...{
            key: "logoHome",
-           color:"inherit",
+           color:"black",
            to: "/",
            component: RouterLink,
            className: logo
@@ -81,7 +123,29 @@ export default function CustomerHeader() {
        {/* <img src="TFlogo.png" alt="logo"  /> */}
        </Button>
       
+       <div className={classes.searchContainer}>
+            <SearchIcon className={classes.searchIcon} />
+            <TextField
+              className={classes.searchInput}
+              onChange={handleSearchChange}
+              label="search for technicians here!"
+              variant="standard"
+            />
+          </div>
+
       <div>{getMenuButtons()}</div>
+      <Button
+          {...{
+            key: "logout",
+            color:"black",
+            className: menuButton
+          }} 
+          onClick = {()=>{handleLogout()}}
+        >
+        Logout
+        {/* <img src="TFlogo.png" alt="logo"  /> */}
+        </Button>
+       
       </Toolbar>
     );
   };
@@ -98,7 +162,7 @@ export default function CustomerHeader() {
         <Button
           {...{
             key: label,
-            color:"inherit",
+            color:"black",
             to: href,
             component: RouterLink,
             className: menuButton
@@ -112,7 +176,7 @@ export default function CustomerHeader() {
 
   return (
     <header>
-      <AppBar className={header}>
+      <AppBar className={header} elevation={0}>
         {displayDesktop()}
       </AppBar>
     </header>
