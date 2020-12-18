@@ -22,6 +22,8 @@ export default {
     logout: () =>
         axios.get(`${BASE_API_URL}/logout`),
     
+    getAllCities: () => 
+        axios.get(`${BASE_API_URL}/cities`, getTokenFromStorage),
 
     /* getAllCategories: () => 
         axios.get(`${BASE_API_URL}/categories`, getTokenFromStorage),
