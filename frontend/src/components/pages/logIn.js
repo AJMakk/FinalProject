@@ -196,6 +196,7 @@ if (localStorage.getItem('AccessToken')) {
           <TextField
             variant="outlined"
             margin="normal"
+            size='small'
             required
             fullWidth
             id="email"
@@ -209,6 +210,7 @@ if (localStorage.getItem('AccessToken')) {
           <TextField
             variant="outlined"
             margin="normal"
+            size='small'
             required
             fullWidth
             name="password"
@@ -227,7 +229,7 @@ if (localStorage.getItem('AccessToken')) {
             type="submit"
             fullWidth
             variant="contained"
-            color="#698736"
+            color="inherit"
             className={classes.submit}
             onClick={onAddSubmit}
             disabled={loading}>
