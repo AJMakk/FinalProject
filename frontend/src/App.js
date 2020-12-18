@@ -13,7 +13,7 @@ import GuestHeader from './components/headers/guestHeader';
 import CustomerHeader from './components/headers/customerHeader';
 
 import Login from './components/pages/logIn';
-import Register from './components/pages/customers/register';
+import Register from './components/pages/customers/register/register';
 import Logout from './components/pages/logOut';
 import Home from './components/pages/home';
 import SearchTable from './components/pages/customers/search/search';
