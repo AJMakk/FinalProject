@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { 
   AppBar, 
@@ -6,12 +6,16 @@ import {
   Typography, 
   makeStyles,
   Button,
+  fade,
+  TextField,
  } from '@material-ui/core';
+ import SearchIcon from "@material-ui/icons/Search";
  import HelpIcon from '@material-ui/icons/Help';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   header: {
-     backgroundColor: "#698736",
+     
+     background: 'none',
      paddingRight: "79px",
      paddingLeft: "118px",
   },
@@ -19,8 +23,26 @@ const useStyles = makeStyles(() => ({
   logo: {
     fontFamily: "Work Sans, sans-serif",
     fontWeight: 600,
-    color: "#FFFEFE",
+    color: "black",
     textAlign: "left",
+  },
+
+  searchContainer: {
+    display: "flex",
+    backgroundColor: fade('#00000', 0.15),
+    paddingLeft: "20px",
+    paddingRight: "20px",
+    marginTop: "-15px",
+    marginBottom: "5px",
+  },
+  searchIcon: {
+    alignSelf: "flex-end",
+    marginBottom: "5px",
+    color:'#000000'
+  },
+  searchInput: {
+    width: "250px",
+    margin: "5px",
   },
 
  /*  logo: {
@@ -31,7 +53,7 @@ const useStyles = makeStyles(() => ({
     fontFamily: "Open Sans, sans-serif",
     fontWeight: 700,
     size: "18px",
-    marginLeft: "38px",
+    marginLeft: "20px",
   },
 
   toolbar: {
@@ -44,7 +66,7 @@ const useStyles = makeStyles(() => ({
 const guestHeaderData = [
   
   {
-    label: "Search For Technicians",
+    label: "All Technicians",
     href: "/search",
   },
   {
@@ -63,6 +85,13 @@ const guestHeaderData = [
 
 export default function GuestHeader() {
   const { header, logo, menuButton, toolbar } = useStyles();
+  const classes = useStyles();
+  const [filter, setFilter] = useState("");
+
+
+  const handleSearchChange = (e) => {
+    setFilter(e.target.value);
+  };
 
   const displayDesktop = () => {
     return (
@@ -70,7 +99,7 @@ export default function GuestHeader() {
        <Button
           {...{
             key: "logoHome",
-            color:"inherit",
+            color:"black",
             to: "/",
             component: RouterLink,
             className: logo
@@ -80,7 +109,16 @@ export default function GuestHeader() {
         {/* <img src="TFlogo.png" alt="logo"  /> */}
         </Button>
        
-        
+        <div className={classes.searchContainer}>
+            <SearchIcon className={classes.searchIcon} />
+            <TextField
+              className={classes.searchInput}
+              onChange={handleSearchChange}
+              label="search for technicians here!"
+              variant="standard"
+            />
+          </div>
+
        <div>{getMenuButtons()}</div>
        
        </Toolbar>
@@ -99,7 +137,7 @@ export default function GuestHeader() {
         <Button
           {...{
             key: label,
-            color:"inherit",
+            color:"black",
             to: href,
             component: RouterLink,
             className: menuButton
@@ -117,7 +155,7 @@ export default function GuestHeader() {
 
   return (
     <header>
-      <AppBar className={header}>
+      <AppBar className={header} elevation={0}>
         {displayDesktop()}
       </AppBar>
     </header>
