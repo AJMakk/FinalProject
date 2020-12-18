@@ -137,6 +137,7 @@ const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
 
   return (
+    
     <Toolbar
       className={clsx(classes.root)}
     >
@@ -164,6 +165,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop:theme.spacing(10),
     marginBottom: theme.spacing(2),
+    background:'none',
   },
   table: {
     minWidth: 750,
