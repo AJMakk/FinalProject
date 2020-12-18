@@ -94,6 +94,7 @@ export default function Register() {
                 value={firstName}
                 onChange={e => setFirstName(e.target.value)}
                 variant="outlined"
+                size='small'
                 required
                 fullWidth
                 id="firstName"
@@ -104,6 +105,7 @@ export default function Register() {
             <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
+                size='small'
                 required
                 fullWidth
                 id="lastName"
@@ -117,6 +119,7 @@ export default function Register() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                size='small'
                 required
                 fullWidth
                 id="email"
@@ -130,6 +133,7 @@ export default function Register() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                size='small'
                 required
                 fullWidth
                 name="password"
@@ -144,6 +148,7 @@ export default function Register() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                size='small'
                 required
                 fullWidth
                 name="confirmPassword"
@@ -169,7 +174,7 @@ export default function Register() {
             type="submit"
             fullWidth
             variant="contained"
-            color="#698736"
+            color="inherit"
             className={classes.submit}
             onClick={handleSubmit}
             disabled={submitting}>
