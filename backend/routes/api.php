@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CustomerAuthController;
+use App\Http\Controllers\API\CityController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', [CustomerAuthController::class,'register']);
 Route::post('/login', [CustomerAuthController::class,'login']);
 Route::get('/logout', [CustomerAuthController::class,'logout']);
+
+Route::get('/cities', [CityController::class,'index']);
+/* Route::apiResource('/cities', CityController::class)->middleware('auth:api');
+ */
