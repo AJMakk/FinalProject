@@ -16,7 +16,8 @@ import Login from './components/pages/logIn';
 import Register from './components/pages/customers/register/register';
 import Logout from './components/pages/logOut';
 import Home from './components/pages/home';
-import SearchTable from './components/pages/customers/search/search';
+import AllTechniciansTable from './components/pages/customers/search/allTechnicians';
+import Results from './components/pages/customers/search/results';
 
 
 function Header() {
@@ -46,8 +47,11 @@ function App() {
                <Route exact path="/logout">
                   <Logout></Logout>
                </Route>
+               <Route exact path="/alltechnicians">
+                  <AllTechniciansTable></AllTechniciansTable>
+               </Route>
                <Route exact path="/search">
-                  <SearchTable></SearchTable>
+                  <Results></Results>
                </Route>
             </Switch>
       </Router>
