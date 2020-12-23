@@ -66,7 +66,7 @@ const useStyles = makeStyles(() => ({
 const customerHeaderData = [
   {
     label: "All Technicians",
-    href: "/search",
+    href: "/alltechnicians",
   },
   {
     label: <HelpIcon ></HelpIcon>,
@@ -91,6 +91,13 @@ export default function CustomerHeader() {
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
+  };
+
+  const handleSearchKeypress = (e) => {
+    //it triggers by pressing the enter key
+    if (e.key === 'Enter') {
+      history.push("/search");
+    }
   };
 
   const handleLogout = () => {
@@ -127,6 +134,7 @@ export default function CustomerHeader() {
             <SearchIcon className={classes.searchIcon} />
             <TextField
               className={classes.searchInput}
+              onKeyPress={handleSearchKeypress}
               onChange={handleSearchChange}
               label="search for technicians here!"
               variant="standard"

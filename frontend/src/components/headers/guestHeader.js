@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import { 
   AppBar, 
   Toolbar, 
@@ -67,7 +67,7 @@ const guestHeaderData = [
   
   {
     label: "All Technicians",
-    href: "/search",
+    href: "/alltechnicians",
   },
   {
     label: <HelpIcon ></HelpIcon>,
@@ -88,9 +88,18 @@ export default function GuestHeader() {
   const classes = useStyles();
   const [filter, setFilter] = useState("");
 
+  let history = useHistory();
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
+  };
+
+  const handleSearchKeypress = (e) => {
+    //it triggers by pressing the enter key
+
+    if (e.key === 'Enter') {
+      history.push("/search");
+    }
   };
 
   const displayDesktop = () => {
@@ -113,6 +122,7 @@ export default function GuestHeader() {
             <SearchIcon className={classes.searchIcon} />
             <TextField
               className={classes.searchInput}
+              onKeyPress={handleSearchKeypress}
               onChange={handleSearchChange}
               label="search for technicians here!"
               variant="standard"
