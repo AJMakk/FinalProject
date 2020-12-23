@@ -183,7 +183,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchTable() {
+export default function AllTechniciansTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('rating');
@@ -255,7 +255,7 @@ export default function SearchTable() {
                       <TableCell align="left">{row.speciality}</TableCell>
                       <TableCell align="center">{row.rating}</TableCell>
                       <TableCell align="left">{row.city}</TableCell>
-                      <TableCell align="center">{row.distance}</TableCell>
+                      <TableCell align="center">{row.distance} Kms</TableCell>
                       <TableCell align="left">{row.schedule}</TableCell>
                     </TableRow>
                   );
