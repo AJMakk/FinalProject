@@ -46,6 +46,36 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+
+        'technician' => [
+            'driver' => 'session',
+            'provider' => 'technicians',
+        ],
+
+        'admin-api' => [
+            'driver' => 'passport',
+            'provider' => 'admins',
+        ],
+
+        'user-api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
+
+        'technician-api' => [
+            'driver' => 'passport',
+            'provider' => 'technicians',
+        ],
     ],
 
     /*
@@ -69,6 +99,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'technicians' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Technician::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
