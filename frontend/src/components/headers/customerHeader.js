@@ -10,7 +10,9 @@ import {
   fade,
   TextField,
  } from '@material-ui/core';
- import SearchIcon from "@material-ui/icons/Search";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import SearchIcon from "@material-ui/icons/Search";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
@@ -61,6 +63,11 @@ const useStyles = makeStyles(() => ({
     justifyContent: "space-between",
   },
 
+  rightSideButtons: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
 }));
 
 const customerHeaderData = [
@@ -76,17 +83,13 @@ const customerHeaderData = [
     label: <NotificationsIcon></NotificationsIcon>,
     href: "/notifications",
   },
-  {
-    label: <AccountCircleIcon></AccountCircleIcon>,
-    href: "/myprofile",
-  },
 ];
 
 export default function CustomerHeader() {
   const { header, logo, menuButton, toolbar } = useStyles();
   const classes = useStyles();
   const [filter, setFilter] = useState("");
-
+  const [anchorEl, setAnchorEl] = useState(null);
   let history = useHistory();
 
   const handleSearchChange = (e) => {
@@ -99,6 +102,22 @@ export default function CustomerHeader() {
       history.push("/search");
     }
   };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleProfile = () => {
+    history.push("/customer/myprofile")
+  }
+
+  const handleAppointments = () => {
+    history.push("/customer/myappointments")
+  }
 
   const handleLogout = () => {
     api.logout().then(res => {
@@ -140,20 +159,25 @@ export default function CustomerHeader() {
               variant="standard"
             />
           </div>
-
-      <div>{getMenuButtons()}</div>
-      <Button
-          {...{
-            key: "logout",
-            color:"black",
-            className: menuButton
-          }} 
-          onClick = {()=>{handleLogout()}}
-        >
-        Logout
-        {/* <img src="TFlogo.png" alt="logo"  /> */}
-        </Button>
-       
+      <div className={classes.rightSideButtons}>   
+        <div>{getMenuButtons()}</div>
+        <div>
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+            <AccountCircleIcon></AccountCircleIcon>
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleProfile}>My Profile</MenuItem>
+            <MenuItem onClick={handleAppointments}>My Appointments</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
+        </div> 
+      </div>  
       </Toolbar>
     );
   };
