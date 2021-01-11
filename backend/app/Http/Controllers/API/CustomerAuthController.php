@@ -27,7 +27,7 @@ class CustomerAuthController extends Controller
 
         /* $user->attachRole($customer); */
 
-        $accessToken = $user->createToken('authToken')->accessToken;
+        $accessToken = $user->createToken('authToken', ['user'])->accessToken;
 
         return response([ 'user' => $user, 'access_token' => $accessToken]);
     }
@@ -43,7 +43,7 @@ class CustomerAuthController extends Controller
             return response(['message' => 'Invalid Credentials']);
         }
 
-        $accessToken = auth()->user()->createToken('authToken')->accessToken;
+        $accessToken = auth()->user()->createToken('authToken', ['user'])->accessToken;
 
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
 
