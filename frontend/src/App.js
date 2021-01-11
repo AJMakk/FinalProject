@@ -11,22 +11,36 @@ import {
 
 import GuestHeader from './components/headers/guestHeader';
 import CustomerHeader from './components/headers/customerHeader';
+import TechnicianHeader from './components/headers/technicianHeader';
+
 
 import Login from './components/pages/logIn';
 import Register from './components/pages/customers/register/register';
+import Apply from './components/pages/technicians/apply/apply';
 import Logout from './components/pages/logOut';
 import Home from './components/pages/home';
 import AllTechniciansTable from './components/pages/customers/search/allTechnicians';
 import Results from './components/pages/customers/search/results';
+import Appointments from './components/pages/customers/appointments/schedule';
+import   CustomerProfile  from './components/pages/customers/profiles/profile';
+import   TechnicianProfile  from './components/pages/technicians/profiles/profile';
+import TechnicianSchedule from './components/pages/technicians/appointments/schedule';
+
 
 
 function Header() {
-   if (!localStorage.getItem('AccessToken'))
+   if (!localStorage.getItem('CustomerAccessToken'))
    {
-     return <GuestHeader />;
-   }
-   return <CustomerHeader />;
- }
+      if (!localStorage.getItem('TechnicianAccessToken'))
+      {
+        return <GuestHeader />;
+      } else {
+         return <TechnicianHeader />;
+      }
+   } else {
+      return <CustomerHeader />;
+      }
+}
 
 function App() {
   return (
@@ -44,6 +58,9 @@ function App() {
                <Route exact path="/register">
                   <Register></Register>
                </Route>
+               <Route exact path="/apply">
+                  <Apply></Apply>
+               </Route>
                <Route exact path="/logout">
                   <Logout></Logout>
                </Route>
@@ -52,6 +69,18 @@ function App() {
                </Route>
                <Route exact path="/search">
                   <Results></Results>
+               </Route>
+               <Route exact path="/customer/myappointments">
+                  <Appointments></Appointments>
+               </Route>
+               <Route exact path="/customer/myprofile">
+                  <CustomerProfile></CustomerProfile>
+               </Route>
+               <Route exact path="/technician/myschedule">
+                  <TechnicianSchedule></TechnicianSchedule>
+               </Route>
+               <Route exact path="/technician/profile">
+                  <TechnicianProfile></TechnicianProfile>
                </Route>
             </Switch>
       </Router>
