@@ -12,7 +12,10 @@ const getTokenFromStorage = {
 export default {
 
     login: (loginCredentials) =>
-        axios.post(`${BASE_API_URL}/login`, loginCredentials),
+        axios.post(`${BASE_API_URL}/user/login`, loginCredentials),
+
+    technicianLogin: (loginCredentials) =>
+        axios.post(`${BASE_API_URL}/technician/login`, loginCredentials),
 
     register: (newUserInfo) =>
         axios.post(`${BASE_API_URL}/register`,{first_name:newUserInfo.firstName,
@@ -24,6 +27,9 @@ export default {
     
     getAllCities: () => 
         axios.get(`${BASE_API_URL}/cities`, getTokenFromStorage),
+    
+    getAllCategories: () => 
+        axios.get(`${BASE_API_URL}/categories`, getTokenFromStorage),
 
     /* getAllCategories: () => 
         axios.get(`${BASE_API_URL}/categories`, getTokenFromStorage),
