@@ -9,6 +9,8 @@ import {
   fade,
   TextField,
  } from '@material-ui/core';
+ import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
  import SearchIcon from "@material-ui/icons/Search";
  import HelpIcon from '@material-ui/icons/Help';
 
@@ -61,6 +63,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
 
+  rightSideButtons: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
 }));
 
 const guestHeaderData = [
@@ -77,16 +84,14 @@ const guestHeaderData = [
     label: "Log In",
     href: "/login",
   },
-  {
-    label: "Register",
-    href: "/register",
-  },
 ];
 
 export default function GuestHeader() {
   const { header, logo, menuButton, toolbar } = useStyles();
   const classes = useStyles();
   const [filter, setFilter] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+
 
   let history = useHistory();
 
@@ -100,6 +105,21 @@ export default function GuestHeader() {
     if (e.key === 'Enter') {
       history.push("/search");
     }
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleRegisterCustomer = () => {
+    history.push("/register")
+  };
+  const handleRegisterTechnician = () => {
+    history.push("/apply")
   };
 
   const displayDesktop = () => {
@@ -128,9 +148,25 @@ export default function GuestHeader() {
               variant="standard"
             />
           </div>
-
-       <div>{getMenuButtons()}</div>
-       
+       <div className={classes.rightSideButtons}>
+        <div>{getMenuButtons()}</div>
+        <div>
+          <Button aria-controls="simple-menu" aria-haspopup="true" className = {classes.menuButton} onClick={handleClick}>
+            Create An Account
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            onMouseLeave={handleClose}
+          >
+            <MenuItem  onClick={handleRegisterCustomer}>Become A Customer</MenuItem>
+            <MenuItem  onClick={handleRegisterTechnician}>Apply As A Technician</MenuItem>
+          </Menu>
+        </div>  
+      </div>
        </Toolbar>
     );
   };
