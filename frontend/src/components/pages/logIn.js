@@ -151,7 +151,34 @@ export default function LogIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onAddSubmit = async () => {
+ const technicianLogin = async () => {
+  try {
+    await api
+    .technicianLogin({
+        email, password
+    })
+    .then(res=> {
+        if (!res.data.id) {
+          alert('no user found!')
+          console.log('technician data: ', res.data)
+        }
+        else {
+          console.log("data: ", res.data)
+            localStorage.setItem('TechnicianAccessToken', res.data.token);
+            localStorage.setItem('UsersName', res.data.first_name);
+            console.log("res: ",res.data.token);
+            history.push('/');
+            window.location.reload();
+        }
+    });
+  }catch {
+    alert('Failed to Login');
+  } finally {
+    setLoading(false);
+  }
+};
+ 
+const onAddSubmit = async () => {
     setLoading(true);
     try {
         await api
@@ -159,13 +186,16 @@ export default function LogIn() {
             email, password
         })
         .then(res=> {
-            if (!res.data.user) {
-                alert(res.data.message)
+            if (!res.data.id) {
+              technicianLogin()
+              alert('no user found!')
+              console.log('user data: ', res.data)
             }
             else {
-                localStorage.setItem('AccessToken', res.data.access_token);
-                localStorage.setItem('UsersName', res.data.user.name);
-                console.log("res: ",res.data.access_token);
+              console.log("data: ", res.data)
+                localStorage.setItem('CustomerAccessToken', res.data.token);
+                localStorage.setItem('UsersName', res.data.first_name);
+                console.log("res: ",res.data.token);
                 history.push('/');
                 window.location.reload();
             }
@@ -177,7 +207,7 @@ export default function LogIn() {
     }
 };
 
-if (localStorage.getItem('AccessToken')) {
+if (localStorage.getItem('CustomerAccessToken')) {
     return (
         
         <h6><b>You are already logged in !</b></h6>   
