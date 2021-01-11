@@ -13,7 +13,7 @@ export default function Logout() {
     api.logout().then(res => {
       console.log("res: ",res);
       
-      localStorage.removeItem('AccessToken');
+      localStorage.removeItem('CustomerAccessToken');
       localStorage.removeItem('UsersName');
       localStorage.clear();
 
