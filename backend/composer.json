@@ -15,7 +15,8 @@
         "laravel/framework": "^8.12",
         "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
-        "santigarcor/laratrust": "^6.3"
+        "santigarcor/laratrust": "^6.3",
+        "pusher/pusher-php-server": "^4.1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
