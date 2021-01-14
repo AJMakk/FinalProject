@@ -12,7 +12,8 @@ import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBor
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(10)
+    marginTop: theme.spacing(10),
+    marginRight: theme.spacing(14)
   } ,
   card: {
     borderRadius: 12,
@@ -81,23 +82,19 @@ export const CustomerProfile = React.memo(function ProfileCard() {
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
         <Avatar className={styles.avatar} src={''} />
         <h3 className={styles.heading}>Ali Makkawi</h3>
-        <span className={styles.subheader}>Electrician</span>
+        
         </Box>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-        <h3 className={styles.descriptionSubheader}>Description</h3>
-        <p className={styles.description}>Electrician with many years experience. worked in all of Lebanon.</p>
+        <h3 className={styles.descriptionSubheader}>Residence</h3>
+        <p className={styles.description}> Maarad Street, behind Max , Monalisa Bldg.</p>
         </Box>
       </Box>
       </CardContent>
       <Divider light />
       <Box display={'flex'}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Distance</p>
-          <p className={styles.statValue}>5 kms</p>
-        </Box>
-        <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Rating</p>
-          <p className={styles.statValue}>5</p>
+          <p className={styles.statLabel}>City</p>
+          <p className={styles.statValue}>Tripoli</p>
         </Box>
       </Box>
     </Card>
