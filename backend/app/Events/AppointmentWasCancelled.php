@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AppointmentWasCancelled
+class AppointmentWasCancelled implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -23,10 +23,10 @@ class AppointmentWasCancelled
      *
      * @return void
      */
-    public function __construct($username)
+    public function __construct($appointment)
     {
-        $this->username = $username;
-        $this->message = "{$username} cancelled your appointment";
+        $this->appointment = $appointment;
+        $this->message = "{$appointment->user->first_name}{' '}{$appointment->user->last_name} cancelled your appointment";
     }
 
     /**
