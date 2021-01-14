@@ -18,7 +18,8 @@ class RegisterController extends Controller
             'city_id' => 'required|integer',
             'category_id' => 'required|integer',
             'email' => 'email|required',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'ratings' => 'required',
         ]);
 
         $validatedData['password'] = bcrypt($request->password);
