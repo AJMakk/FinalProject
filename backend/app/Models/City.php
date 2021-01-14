@@ -14,4 +14,13 @@ class City extends Model
 
     protected $hidden = ['timestamp'];
 
+    public function technicians()
+    {
+        return $this->hasMany(Technician::class, 'city_id');
+    }
+
+    public function users()
+    {
+    	return $this->hasMany(User::class, 'user_id');
+    }
 }

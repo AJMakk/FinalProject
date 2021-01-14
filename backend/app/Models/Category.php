@@ -16,4 +16,9 @@ class Category extends Model
 
     protected $hidden = ['timestamp'];
 
+    public function technicians()
+    {
+    	return $this->hasMany(Technician::class, 'category_id');
+    }
+
 }
