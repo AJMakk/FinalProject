@@ -24,6 +24,6 @@ Route::post('technician/apply',[RegisterController::class, 'technicianApply'])->
 Route::group( ['prefix' => 'technician','middleware' => ['auth:technician-api','scopes:technician'] ],function(){
    // authenticated technician routes here
     Route::get('dashboard',[LoginController::class, 'technicianDashboard']);
-    Route::get('appointments',[AppointmentsController::class, 'technicianApply'])->name('technicianAppointments');
+    Route::get('appointments',[AppointmentsController::class, 'index'])->name('technicianAppointments');
 
 });
