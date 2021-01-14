@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Events\AppointmentWasCancelled;
 use App\Models\Appointment;
 use App\Http\Resources\AppointmentResource;
 
@@ -83,6 +84,8 @@ class AppointmentsController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
+        event(new AppointmentWasCancelled($appointment));
+
         $appointment->delete();
 
         return  response(['message' => 'Deleted']);
