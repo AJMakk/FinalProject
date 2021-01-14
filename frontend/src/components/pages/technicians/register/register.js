@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Apply() {
+export default function TechnicianRegister() {
   const classes = useStyles();
   const history = useHistory();
   const [firstName, setFirstName] = useState('');
@@ -55,6 +55,7 @@ export default function Apply() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
 
   const handleCategoryChange = (event,value) => {
     let newCategoryId =  value.id;
@@ -68,6 +69,24 @@ export default function Apply() {
     console.log('child City Id: ', newCityId);
   }
 
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    try {
+     await api.technicianRegister({
+         firstName, lastName, cityId, categoryId, email, password, confirmPassword
+     });
+     history.push('/')
+    }
+    catch {
+     alert('Failed to Register');
+    } 
+    finally {
+     setSubmitting(false);
+    }
+    setTimeout(() => {
+      setSubmitting(false);
+    }, 3000)
+    };
   /* const handleSubmit = async () => {
     setSubmitting(true);
     try {
@@ -186,9 +205,10 @@ export default function Apply() {
             fullWidth
             variant="contained"
             color="inherit"
+            onClick={handleSubmit}
             className={classes.submit}
             disabled={submitting}>
-            {submitting? 'Sending your application...' : 'Apply'}
+            {submitting? 'Registering...' : 'Register'}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
