@@ -25,6 +25,7 @@ class Technician extends Authenticatable
         'category_id',
         'email',
         'password',
+        'ratings',
     ];
 
     /**
@@ -49,6 +50,15 @@ class Technician extends Authenticatable
     public function appointments()
     {
     	return $this->hasMany(Appointment::class, 'technician_id');
+    }
+
+    public function category()
+    {
+    	return $this->belongsTo(Category::class, 'category_id');
+    }
+    public function city()
+    {
+    	return $this->belongsTo(City::class, 'city_id');
     }
 }
 
