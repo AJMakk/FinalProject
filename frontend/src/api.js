@@ -17,11 +17,15 @@ export default {
     technicianLogin: (loginCredentials) =>
         axios.post(`${BASE_API_URL}/technician/login`, loginCredentials),
 
-    register: (newUserInfo) =>
+    customerRegister: (newUserInfo) =>
         axios.post(`${BASE_API_URL}/register`,{first_name:newUserInfo.firstName,
              last_name:newUserInfo.lastName,city_id:newUserInfo.cityId, email:newUserInfo.email,
              password:newUserInfo.password, password_confirmation:newUserInfo.confirmPassword}),
 
+    technicianRegister: (newUserInfo) =>
+        axios.post(`${BASE_API_URL}/technician/apply`,{first_name:newUserInfo.firstName,
+             last_name:newUserInfo.lastName,city_id:newUserInfo.cityId, category_id:newUserInfo.categoryId, email:newUserInfo.email,
+             password:newUserInfo.password, password_confirmation:newUserInfo.confirmPassword, ratings:0}),        
     logout: () =>
         axios.get(`${BASE_API_URL}/logout`),
     
@@ -30,6 +34,10 @@ export default {
     
     getAllCategories: () => 
         axios.get(`${BASE_API_URL}/categories`, getTokenFromStorage),
+    
+     getAllTechnicians: () => 
+        axios.get(`${BASE_API_URL}/technicians`),
+
 
     /* getAllCategories: () => 
         axios.get(`${BASE_API_URL}/categories`, getTokenFromStorage),
