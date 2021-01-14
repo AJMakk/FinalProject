@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -18,21 +18,25 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import api from '../../../../api';
+import SimpleRating from './ratings';
 
-function createData(name, speciality, rating, city, distance, schedule) {
-  return { name, speciality, rating, city,distance, schedule };
+function createData(name, speciality, rating, city, schedule) {
+  return { name, speciality, rating, city, schedule };
 }
 
-const rows = [
-  createData('Ali Makkawi', 'Electrician', 5, 'Tripoli', 67, 'link'),
-  createData('Omar Kabbara', 'Plumber', 4.4, 'Akkar', 51, 'link'),
-  createData('Fouad El Hage', 'Mechanic', 4.4, 'Tripoli', 24, 'link'),
-  createData('Mousa Makkawi', 'AC Repairman', 4.8, 'Tripoli', 24, 'link'),
-  createData('Mohammad Makkawi', 'Electrician', 4.8, 'Tripoli', 49, 'link'),
-  createData('Mohammad Haidar', 'Carpenter', 4.2, 'Beirut', 87, 'link'),
-  createData('Daniel Farhat', 'Electronics Repairman', 4.3, 'Beirut', 37,'link'),
-];
+const rows = [];
 
+const getAllTechniciansData= async () => {
+    await api.getAllTechnicians().then(res => {
+    const techData = res.data.technicians;
+    techData.forEach(obj=>{
+    rows.push(createData(obj.first_name + ' '+ obj.last_name, obj.category.name, obj.ratings, obj.city.city, 'check'))
+    })
+    })
+  
+
+}
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -60,12 +64,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: "Technician's Name" },
+  { id: 'name', numeric: false, disablePadding: true, label: "Name" },
   { id: 'speciality', numeric: false, disablePadding: false, label: 'Speciality' },
   { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
-  { id: 'distance', numeric: true, disablePadding: false, label: 'Distance' },
-  { id: 'schedule', numeric: false, disablePadding: false, label: 'Check Schedule' },
+  { id: 'schedule', numeric: false, disablePadding: false, label: 'Schedule' },
 ];
 
 function EnhancedTableHead(props) {
@@ -73,7 +76,7 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
+  
   return (
     <TableHead>
       <TableRow>
@@ -130,6 +133,8 @@ const useToolbarStyles = makeStyles((theme) => ({
         },
   title: {
     flex: '1 1 100%',
+    marginLeft: theme.spacing(3.5),
+
   },
 }));
 
@@ -142,7 +147,7 @@ const EnhancedTableToolbar = (props) => {
       className={clsx(classes.root)}
     >
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Technicians
+          Tradesmen
         </Typography>
       
         <Tooltip title="Filter list">
@@ -185,19 +190,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AllTechniciansTable() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('rating');
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('rating');
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  useEffect(() => {
+    if(!rows.length) {
+      getAllTechniciansData();
+    }
+  }, [])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -253,9 +262,8 @@ export default function AllTechniciansTable() {
                         {row.name}
                       </TableCell>
                       <TableCell align="left">{row.speciality}</TableCell>
-                      <TableCell align="center">{row.rating}</TableCell>
+                      <TableCell align="center"><SimpleRating /></TableCell>
                       <TableCell align="left">{row.city}</TableCell>
-                      <TableCell align="center">{row.distance} Kms</TableCell>
                       <TableCell align="left">{row.schedule}</TableCell>
                     </TableRow>
                   );
