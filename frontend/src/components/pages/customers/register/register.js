@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register() {
+export default function CustomerRegister() {
   const classes = useStyles();
   const history = useHistory();
   const [firstName, setFirstName] = useState('');
@@ -63,7 +63,7 @@ export default function Register() {
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
-     await api.register({
+     await api.customerRegister({
          firstName, lastName, cityId, email, password, confirmPassword
      });
      history.push('/')
