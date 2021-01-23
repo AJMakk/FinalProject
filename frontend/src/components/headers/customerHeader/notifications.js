@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -9,9 +9,11 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import api from '../../../api';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +29,25 @@ export default function NotificationsDropDownMenu() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const [notifications, setNotifications] = useState([]);
+  const [notificationsLength, setNotificationsLength] = useState(0);
+
+  const holderNotif = [];
+
+  const options = {
+    broadcaster: "pusher",
+    key: "9d2040fd9f3ee80d3e21",
+    cluster: "eu",
+    forceTLS: true,
+  
+  };
+  const echo = new Echo(options);
+  echo.channel('appointment-approved').listen('AppointmentApproved', (e) => {
+    console.log('notif: ',e.message);
+    holderNotif.push(e.message);
+    setNotifications(holderNotif);
+    setNotificationsLength(holderNotif.length);
+  })
 
   let history = useHistory();
 
@@ -77,7 +98,7 @@ export default function NotificationsDropDownMenu() {
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
-        >   <Badge badgeContent={2} color="primary">
+        >   <Badge badgeContent={notificationsLength} color="primary">
                 <NotificationsIcon />
             </Badge>
         </Button>
@@ -90,8 +111,11 @@ export default function NotificationsDropDownMenu() {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleProfile}>Omar Kabbara cancelled your appointment.</MenuItem>
-                    <MenuItem onClick={handleAppointments}>Daniel Farhat approved your appointment.</MenuItem>
+                  {notifications.map((item) => {
+                    return (
+                      <MenuItem>{item} </MenuItem>
+                    )
+                  })}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
