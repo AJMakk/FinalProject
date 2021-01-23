@@ -73,7 +73,7 @@ const guestHeaderData = [
   
   {
     label: "All Tradesmen",
-    href: "/alltradesmen",
+    href: "/guest/alltradesmen",
   },
   {
     label: <HelpIcon ></HelpIcon>,
