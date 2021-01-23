@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered';
+import api from '../../../../api';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
     /* textAlign: 'left', */
   },
   avatar: {
-    width: 60,
-    height: 60,
+    width: 90,
+    height: 90,
     margin: 'left',
   },
   heading: {
@@ -70,19 +71,48 @@ const useStyles = makeStyles((theme) => ({
 export const CustomerProfile = React.memo(function ProfileCard() {
   const styles = useStyles();
   const shadowStyles = useFadedShadowStyles();
+  const [id, setId] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [city, setCity] = React.useState(''); 
+  const [residence, setResidence] = React.useState('');
   const borderedGridStyles = useGutterBorderedGridStyles({
     borderColor: 'rgba(0, 0, 0, 0.08)',
     height: '50%',
   });
+
+  /* setId(localStorage.getItem('UsersId')); */
+  const handleCustomerInfo = async (id) => {
+  
+    try {
+      await api.getCustomerProfile({id})
+      .then(res=> {
+        if (!res.data.userInfo.id) {
+          alert('no user info found!')
+          console.log('app. data: ', res.data)
+        }
+        else {
+          console.log("appt. data: ", res.data)
+          setName(res.data.userInfo.first_name + ' ', res.data.userInfo.last_name);
+          setCity(res.data.userInfo.city_id);
+        }
+    });
+    }
+    catch {
+      alert('Failed to Approve');
+    } 
+    finally {
+    }
+  };
+
+  /* handleCustomerInfo(id) */
   return (
     <Container className={styles.container}>
     <Card className={cx(styles.card, shadowStyles.root)}>
       <CardContent>
       <Box display={'flex'}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-        <Avatar className={styles.avatar} src={''} />
+        <Avatar className={styles.avatar} src={'/assets/aliMakkawi.jpg'} />
         <h3 className={styles.heading}>Ali Makkawi</h3>
-        
         </Box>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
         <h3 className={styles.descriptionSubheader}>Residence</h3>
