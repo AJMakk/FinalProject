@@ -10,10 +10,11 @@ import {
   TextField
  } from '@material-ui/core';
 import SearchIcon from "@material-ui/icons/Search";
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ChatIcon from '@material-ui/icons/Chat';
 import HelpIcon from '@material-ui/icons/Help';
 import CustomerDropDownMenu from './customerDropDownMenu';
 import NotificationsDropDownMenu from './notifications';
+
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -85,6 +86,10 @@ const customerHeaderData = [
   {
     label: <HelpIcon ></HelpIcon>,
     href: "/help",
+  },
+  {
+    label: <ChatIcon ></ChatIcon>,
+    href: "/customer/1/messages",
   },
 
 ];
