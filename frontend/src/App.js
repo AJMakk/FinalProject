@@ -1,5 +1,4 @@
 import React from 'react';
-import Pusher from 'pusher-js';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './theme';
@@ -25,9 +24,20 @@ import TechnicianHome from './components/pages/home/technicianHome';
 import AllTechniciansTable from './components/pages/customers/search/allTechnicians';
 import Results from './components/pages/customers/search/results';
 import Appointments from './components/pages/customers/appointments/schedule';
-import   CustomerProfile  from './components/pages/customers/profiles/profile';
-import   TechnicianProfile  from './components/pages/technicians/profiles/profile';
+import CustomerProfile  from './components/pages/customers/profile/profile';
+import TechnicianProfile  from './components/pages/technicians/profiles/profile';
 import TechnicianSchedule from './components/pages/technicians/appointments/schedule';
+import Demo from './components/pages/customers/appointments/schedule2';
+import RequestAppointment from './components/pages/customers/search/requestAppointment';
+import ApprovalAppointments from './components/pages/technicians/appointments/approvalAppointments';
+import Echo from 'laravel-echo';
+import Pusher from "pusher-js";
+import GuestAllTechnicians from './components/headers/guestHeader/allTechnicians';
+import CompletedAppointments from './components/pages/customers/appointments/completedAppointments';
+import Chat from './components/pages/customers/chat/chat';
+
+
+
 
 function Header() {
    if (!localStorage.getItem('CustomerAccessToken'))
@@ -42,18 +52,7 @@ function Header() {
       return <CustomerHeader />;
       }
 }
-// Initiate the Pusher JS library
-var pusher = new Pusher('9d2040fd9f3ee80d3e21', {
-   encrypted: true
-});
 
-// Subscribe to the channel we specified in our Laravel Event
-var channel = pusher.subscribe('appointment-cancelled');
-
-// Bind a function to a Event (the full Laravel class)
-channel.bind('App\\Events\\AppointmentWasCancelled', function(data) {
-   // this is called when the event notification is received...
-});
 function Home() {
    if (localStorage.getItem('CustomerAccessToken'))
    {
@@ -92,11 +91,14 @@ function App() {
                <Route exact path="/alltradesmen">
                   <AllTechniciansTable></AllTechniciansTable>
                </Route>
+               <Route exact path="/guest/alltradesmen">
+                  <GuestAllTechnicians></GuestAllTechnicians>
+               </Route>
                <Route exact path="/search">
                   <Results></Results>
                </Route>
                <Route exact path="/customer/myappointments">
-                  <Appointments></Appointments>
+                  <Demo></Demo>
                </Route>
                <Route exact path="/customer/profile">
                   <CustomerProfile></CustomerProfile>
@@ -106,6 +108,18 @@ function App() {
                </Route>
                <Route exact path="/tradesman/profile">
                   <TechnicianProfile></TechnicianProfile>
+               </Route>
+               <Route exact path="/:id/requestappointment">
+                  <RequestAppointment></RequestAppointment>
+               </Route>
+               <Route exact path="/tradesman/tentativeappointments">
+                  <ApprovalAppointments></ApprovalAppointments>
+               </Route>
+               <Route exact path="/customer/completedappointments">
+                  <CompletedAppointments></CompletedAppointments>
+               </Route>
+               <Route exact path="/customer/1/messages">
+                  <Chat></Chat>
                </Route>
             </Switch>
       </Router>
