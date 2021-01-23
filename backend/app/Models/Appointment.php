@@ -10,7 +10,7 @@ class Appointment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'startDate','endDate','location','user_id','technician_id'
+        'title','startDate','endDate','location','user_id','technician_id','approved'
     ];
 
     protected $hidden = ['timestamp'];
