@@ -20,7 +20,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="http://localhost:3000/">
-        TechieFind
+        TradieFind
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -70,6 +70,7 @@ export default function LogIn() {
           console.log("data: ", res.data)
             localStorage.setItem('TechnicianAccessToken', res.data.token);
             localStorage.setItem('UsersName', res.data.first_name);
+            localStorage.setItem('UsersId', res.data.id);
             console.log("res: ",res.data.token);
             history.push('/');
             window.location.reload();
@@ -98,6 +99,7 @@ const onAddSubmit = async () => {
               console.log("data: ", res.data)
                 localStorage.setItem('CustomerAccessToken', res.data.token);
                 localStorage.setItem('UsersName', res.data.first_name);
+                localStorage.setItem('UsersId', res.data.id);
                 console.log("res: ",res.data.token);
                 history.push('/');
                 window.location.reload();
@@ -175,7 +177,7 @@ if (localStorage.getItem('CustomerAccessToken')) {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="register" variant="body2">
+              <Link href="customer/register" variant="body2">
                 {"Don't have an account? Register"}
               </Link>
             </Grid>
