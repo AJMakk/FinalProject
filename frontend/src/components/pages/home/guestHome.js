@@ -53,11 +53,11 @@ export default function GuestHome() {
 
 
     const redirectToRegister = () => {
-        history.push("/register")
+        history.push("/customer/register")
     }
     
     const redirectToAllTechnicians = () => {
-        history.push("/alltradesmen")
+        history.push("/guest/alltradesmen")
     }
    
 return (
