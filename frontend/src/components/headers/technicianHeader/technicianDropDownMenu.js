@@ -38,6 +38,11 @@ export default function TechnicianDropDownMenu() {
     handleToggle()
   }
 
+  const approveAppointments = (event) => {
+    history.push("/tradesman/tentativeappointments")
+    handleToggle()
+  }
+
   const handleLogout = () => {
     api.logout().then(res => {
       console.log("res: ",res);
@@ -101,6 +106,7 @@ export default function TechnicianDropDownMenu() {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleProfile}>My Profile</MenuItem>
                     <MenuItem onClick={handleAppointments}>Schedule Management</MenuItem>
+                    <MenuItem onClick={approveAppointments}>Approve Appointments</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
