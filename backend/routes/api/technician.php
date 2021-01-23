@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\ProfileController;
+
 
 
 /*
@@ -23,7 +25,9 @@ Route::post('technician/apply',[RegisterController::class, 'technicianApply'])->
 
 Route::group( ['prefix' => 'technician','middleware' => ['auth:technician-api','scopes:technician'] ],function(){
    // authenticated technician routes here
-    Route::get('dashboard',[LoginController::class, 'technicianDashboard']);
-    Route::get('appointments',[AppointmentsController::class, 'index'])->name('technicianAppointments');
+   Route::post('appointments/approve',[AppointmentsController::class, 'approve']);
+   Route::post('appointments',[AppointmentsController::class, 'index']);
+   Route::post('profile',[ProfileController::class, 'technicianProfile']);
+
 
 });
