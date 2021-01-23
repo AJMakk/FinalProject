@@ -14,10 +14,8 @@ class AppointmentWasCancelled implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $username;
-
+    public $appointment;
     public $message;
-
     /**
      * Create a new event instance.
      *
@@ -26,7 +24,7 @@ class AppointmentWasCancelled implements ShouldBroadcast
     public function __construct($appointment)
     {
         $this->appointment = $appointment;
-        $this->message = "{$appointment->user->first_name}{' '}{$appointment->user->last_name} cancelled your appointment";
+        $this->message = "{$appointment->user->first_name} {$appointment->user->last_name} cancelled their appointment.";
     }
 
     /**
@@ -38,4 +36,10 @@ class AppointmentWasCancelled implements ShouldBroadcast
     {
         return ['appointment-cancelled'];
     }
+
+    public function broadcastWith() {
+        return [
+          'message' => $this->message,
+        ];
+      }
 }
