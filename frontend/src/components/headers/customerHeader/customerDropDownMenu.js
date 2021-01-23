@@ -38,6 +38,11 @@ export default function CustomerDropDownMenu() {
     handleToggle()
   }
 
+  const handleRatings = (event) => {
+    history.push("/customer/completedappointments")
+    handleToggle()
+  }
+
   const handleLogout = () => {
     api.logout().then(res => {
       console.log("res: ",res);
@@ -101,6 +106,7 @@ export default function CustomerDropDownMenu() {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleProfile}>My Profile</MenuItem>
                     <MenuItem onClick={handleAppointments}>My Appointments</MenuItem>
+                    <MenuItem onClick={handleRatings}>Completed Appointments</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
