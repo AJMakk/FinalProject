@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -18,14 +19,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import api from '../../../../api';
+import Link from '@material-ui/core/Link';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
-function createData(name, speciality, rating, city, distance, schedule) {
-  return { name, speciality, rating, city,distance, schedule };
+
+
+function createData(name, speciality, rating, city, id) {
+  return { name, speciality, rating, city, id };
 }
-
-const rows = [
-  createData('Ali Makkawi', 'Electrician', 5, 'Tripoli', 67, 'link'),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -54,12 +57,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: "Technician's Name" },
+  { id: 'name', numeric: false, disablePadding: true, label: "Name" },
   { id: 'speciality', numeric: false, disablePadding: false, label: 'Speciality' },
   { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
-  { id: 'distance', numeric: true, disablePadding: false, label: 'Distance' },
-  { id: 'schedule', numeric: false, disablePadding: false, label: 'Check Schedule' },
+  { id: 'Appointment', numeric: false, disablePadding: false, label: 'Appointment' },
 ];
 
 function EnhancedTableHead(props) {
@@ -67,7 +69,7 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
+  
   return (
     <TableHead>
       <TableRow>
@@ -124,6 +126,8 @@ const useToolbarStyles = makeStyles((theme) => ({
         },
   title: {
     flex: '1 1 100%',
+    marginLeft: theme.spacing(3.5),
+
   },
 }));
 
@@ -136,7 +140,7 @@ const EnhancedTableToolbar = (props) => {
       className={clsx(classes.root)}
     >
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Technicians
+          Tradesmen
         </Typography>
       
         <Tooltip title="Filter list">
@@ -159,7 +163,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop:theme.spacing(10),
     marginBottom: theme.spacing(2),
-    background:'none',
+    opacity:'0.75',
   },
   table: {
     minWidth: 750,
@@ -177,21 +181,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AllTechniciansTable() {
+export default function ApprovalAppointments() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('rating');
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('rating');
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(true);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rows, setRows] = useState([]);
+
+  const holderData = [];
+
+  const getAllTechniciansData= async () => {
+    await api.getAllTechnicians().then(res => {
+    const techData = res.data.technicians;
+    /* techData.forEach(obj=>{
+    holderData.push(createData(obj.first_name + ' '+ obj.last_name, obj.category.name, obj.ratings, obj.city.city, obj.id))
+    }) */
+    holderData.push(createData('Omar Kabbara', 'Plumber', 4, 'Tripoli', 1))
+    holderData.push(createData('Loay Farhat', 'Plumber', 3, 'Tyre', 10))
+    })
+    
+    setRows(holderData);
+    console.log('rows: ', rows)
+}
+  useEffect(() => {
+    holderData.length = 0
+    if(!rows.length) {
+      getAllTechniciansData();
+    }
+  }, [])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -206,6 +231,11 @@ export default function AllTechniciansTable() {
     setDense(event.target.checked);
   };
 
+  let history = useHistory();
+
+  const preventDefault = () => {
+    history.push('/tradesman/schedule')
+  }
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -247,10 +277,19 @@ export default function AllTechniciansTable() {
                         {row.name}
                       </TableCell>
                       <TableCell align="left">{row.speciality}</TableCell>
-                      <TableCell align="center">{row.rating}</TableCell>
+                      <TableCell align="center">
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                          <Rating name="read-only" value={row.rating} readOnly />
+                        </Box>
+                      </TableCell>
                       <TableCell align="left">{row.city}</TableCell>
-                      <TableCell align="center">{row.distance} Kms</TableCell>
-                      <TableCell align="left">{row.schedule}</TableCell>
+                      <TableCell align="left"><Link component="button" variant="body2" onClick={() => { 
+                        history.push('/' + row.id + '/requestappointment');}}
+                        >
+                          Request
+                        </Link>
+                      
+                      </TableCell>
                     </TableRow>
                   );
                 })}
