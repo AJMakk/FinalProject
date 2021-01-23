@@ -2,9 +2,15 @@ import axios from 'axios';
 
 const BASE_API_URL = 'http://localhost:8000/api';
 
-const getTokenFromStorage = {
+const getCustomerTokenFromStorage = {
     headers: {
-      authorization: 'Bearer ' + localStorage.getItem('AccessToken')
+      authorization: 'Bearer ' + localStorage.getItem('CustomerAccessToken')
+    }
+  };
+
+const getTechnicianTokenFromStorage = {
+    headers: {
+      authorization: 'Bearer ' + localStorage.getItem('TechnicianAccessToken')
     }
   };
 
@@ -30,15 +36,34 @@ export default {
         axios.get(`${BASE_API_URL}/logout`),
     
     getAllCities: () => 
-        axios.get(`${BASE_API_URL}/cities`, getTokenFromStorage),
+        axios.get(`${BASE_API_URL}/cities`),
     
     getAllCategories: () => 
-        axios.get(`${BASE_API_URL}/categories`, getTokenFromStorage),
+        axios.get(`${BASE_API_URL}/categories`),
     
-     getAllTechnicians: () => 
+    getAllTechnicians: () => 
         axios.get(`${BASE_API_URL}/technicians`),
 
+    requestAppointment: (appointment) =>
+        axios.post(`${BASE_API_URL}/user/requestappointment`,{title:appointment.title, startDate:appointment.startDate, endDate:appointment.endDate, 
+            location:appointment.location, user_id:appointment.userId, technician_id:appointment.techId, approved:appointment.approved} , getCustomerTokenFromStorage),
+    
+    approveAppointment: (id) =>
+        axios.post(`${BASE_API_URL}/technician/appointments/approve`,{id:id.id} , getTechnicianTokenFromStorage),
+    
+    getCustomerAppointments: (id) =>
+        axios.post(`${BASE_API_URL}/user/myappointments`, {user_id:id.userId}, getCustomerTokenFromStorage),
 
+    getTechnicianAppointments: (id) =>
+        axios.post(`${BASE_API_URL}/technician/appointments`, {technician_id:id.techId}, getTechnicianTokenFromStorage),
+
+    getCustomerProfile: (id) =>
+        axios.post(`${BASE_API_URL}/user/profile`, {user_id:id.userId}, getCustomerTokenFromStorage),
+
+    getTechnicianProfile: (id) =>
+        axios.post(`${BASE_API_URL}/technician/profile`, {technician_id:id.techId}, getTechnicianTokenFromStorage),
+
+            
     /* getAllCategories: () => 
         axios.get(`${BASE_API_URL}/categories`, getTokenFromStorage),
     getOneCategory: (id) =>
