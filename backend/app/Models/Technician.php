@@ -51,7 +51,10 @@ class Technician extends Authenticatable
     {
     	return $this->hasMany(Appointment::class, 'technician_id');
     }
-
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'technician_id');
+    }
     public function category()
     {
     	return $this->belongsTo(Category::class, 'category_id');
