@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +12,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
+import api from '../../../../api';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,308 +59,86 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// create hook function: 
 
-function ChatComponent() {
-    const [user, setUser] = useState([]);
-    const [messages, setMessages] = useState([]);
-    
-    return(
-    <div>
-        <Typography></Typography>
-    </div>
-        );
-}
-
-function changeChatData() {
-    
-}
-
-function LoayChatData() {
-    const classes = useStyles();
-
-    return(
-        <List className={classes.messageArea}>
-            <Typography className={classes.messagesName} variant="h6" primary =" Loay Farhat">
-            &nbsp;Loay Farhat
-            </Typography>
-            <Divider />
-                    <ListItem key="1">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Hey Loay, do you do bathroom pipe renovations?"></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="09:33"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="2">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Hello Ali, I'm currently not able to do any jobs. Sorry for the inconvenience."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="09:41"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="3">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Sorry to hear that."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="10:20"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                </List>
-    )
-}
-function OmarChatData() {
-    const classes = useStyles();
-
-    return(
-        
-        <List className={classes.messageArea}>
-            <Typography className={classes.messagesName} variant="h6" primary =" Omar Kabbara">
-            &nbsp;Omar Kabbara
-            </Typography>
-            <Divider />
-                    <ListItem key="1">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Hello Omar, I would like to know your checkup fee please."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="09:30"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="2">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Hey Ali, I charge $20 per checkup. If you would like to know 
-                                more I'd be happy to answer."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="09:49"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="3">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Great, I'll request an appointment with you soon."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="10:00"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="4">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Awaiting your request."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="10:11"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                </List>
-    )
-}
-function NewOmarChatData() {
-    const classes = useStyles();
-
-    return(
-        
-        <List className={classes.messageArea}>
-            <Typography className={classes.messagesName} variant="h6" primary =" Omar Kabbara">
-            &nbsp;Omar Kabbara
-            </Typography>
-            <Divider />
-                    <ListItem key="1">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Hello Omar, I would like to know your checkup fee please."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="09:30"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="2">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Hey Ali, I charge $20 per checkup. If you would like to know 
-                                more I'd be happy to answer."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="09:49"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="3">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Great, I'll request an appointment with you soon."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="10:00"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="4">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Awaiting your request."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="10:11"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="5">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="I sent the request."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="12:05"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    
-                </List>
-    )
-}
-function FinalOmarChatData() {
-    const classes = useStyles();
-
-    return(
-        
-        <List className={classes.messageArea}>
-            <Typography className={classes.messagesName} variant="h6" primary =" Omar Kabbara">
-            &nbsp;Omar Kabbara
-            </Typography>
-            <Divider />
-                    <ListItem key="1">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Hello Omar, I would like to know your checkup fee please."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="09:30"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="2">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Hey Ali, I charge $20 per checkup. If you would like to know 
-                                more I'd be happy to answer."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="09:49"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="3">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Great, I'll request an appointment with you soon."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="10:00"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="4">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Awaiting your request."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="10:11"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="5">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="I sent the request."></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="12:05"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="6">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Just approved your request. See you then!"></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="12:05"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    
-                </List>
-    )
-}
-const Chat = () => {
+const CustomerChat = () => {
   const classes = useStyles();
-  const [user, setUser] = useState(1);
+  const [currentTechnicianId, setCurrentTechnicianId] = useState(null);
+  const [currentTechnicianName, setCurrentTechnicianName] = useState('');
+  const [search, setSearch] = useState('');
+  const [technicians, setTechnicians] = useState([]);
+  const [technicianMessages, setTechnicianMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [instantMessages, setInstantMessages] = useState([]);
+  
+  const userId = localStorage.getItem('UsersId');
 
-  function setLastUser() {
-      setUser(4)
-  }
+  const holderMessages = [];
 
-  const handleEnterSendKeypress = (e) => {
+  const options = {
+    broadcaster: "pusher",
+    key: "9d2040fd9f3ee80d3e21",
+    cluster: "eu",
+    forceTLS: true,
+  
+  };
+  const echo = new Echo(options);
+  echo.channel('messages-sent-to-user'+userId).listen('MessageSentToUser', (e) => {
+    console.log('notif: ',e.message);
+    holderMessages.push(e.message);
+    setInstantMessages(holderMessages);
+  })
+
+  const handleEnterSearchKeypress = (e) => {
     //it triggers by pressing the enter key
     if (e.key === 'Enter') {
-        setUser(3)
-        setNewMessage('');
+       (async() => {
+           try {
+               await api.searchForTechnicians(search).then(res => {
+                    const techniciansData = res.data;
+                    setTimeout (() =>{
+                        setTechnicians(techniciansData.technicians);
+                        console.log('techncians search: ', technicians);
+                    }, 600)
+                 
+                    console.log('techncians data: ', techniciansData);   
+               })
+            }
+            catch {
+              alert('Failed to search for tradesmen.');  
+            }
+        })();  
+    
     }
-    setTimeout(setLastUser, 10000)
+    
   };
-  const handleSendKeypress = () => {
-        setUser(3)
-        setNewMessage('');
-        setTimeout(setLastUser, 10000)
-  };
-  function chooseChat() {
-       switch(user) {
-        case 1:
-            return(
-                <OmarChatData></OmarChatData>
-            )
-        case 2:
-          // code block
-          return (
-            <LoayChatData></LoayChatData>
-        )
-        case 3:
-          return (
-            <NewOmarChatData></NewOmarChatData>
-          )
+  const handleSendKeypress = async () => {
+    try {
+        await api.customerSendMessage({
+             userId,currentTechnicianId,newMessage
+        });
+        handleGetMessages(userId,currentTechnicianId);
+       }
+       catch {
+        alert('Failed to send message');
+       }
         
-        case 4: 
-            return (
-                <FinalOmarChatData></FinalOmarChatData>
-            )
-          
-        default:
-            return(
-                <OmarChatData></OmarChatData>
-            )
-      }
-  }
+  };
+  
+ const handleGetMessages = async (user_id,technician_id) => {
+
+    try {
+        await api.getMessagesFromTechnician({
+             user_id,technician_id
+        }).then(res=> {
+              const messages = res.data.messages;
+              setTechnicianMessages(messages.reverse());
+              console.log('messages: ', technicianMessages)
+        });
+       }
+       catch {
+        alert('Failed to get messages');
+       }
+ }
 
   return (
       <div className={classes.root}>
@@ -369,34 +149,78 @@ const Chat = () => {
         </Grid>
         <Grid container component={Paper} className={classes.chatSection}>
             <Grid item xs={3} className={classes.borderRight500}>               
-                {/* <Grid item xs={12} style={{padding: '10px'}}>
-                    <TextField id="outlined-basic-email" label="Search for " variant="outlined" fullWidth />
-                </Grid> */}
-                 <Divider />
+                <Grid item xs={12} style={{padding: '10px'}}>
+                    <TextField 
+                    id="tradesman-search" 
+                    label="Search for a tradesman to message! " 
+                    variant="outlined" 
+                    onChange={e => setSearch(e.target.value)}
+                    onKeyPress={handleEnterSearchKeypress}
+                    fullWidth />
+                </Grid>
+                    <Divider />
                 <List className={classes.chattersList}>
-                    <ListItem button key="RemySharp"  onClick={() => {setUser(1)}}>
-                        <ListItemIcon>
-                            <Avatar alt="Remy Sharp" src="/assets/omarKabbara.jpg" />
-                        </ListItemIcon>
-                        <ListItemText>Omar Kabbara</ListItemText>
-                    </ListItem>
-                    <ListItem button key="CindyBaker"onClick={() => {setUser(2)}}>
-                        <ListItemIcon>
-                            <Avatar alt="Cindy Baker" src="https://material-ui.com/static/images/avatar/2.jpg" />
-                        </ListItemIcon>
-                        <ListItemText primary="Loay Farhat">Loay Farhat</ListItemText>
-                    </ListItem>
+                    {technicians.map((technician) => {
+                        return (
+                            <ListItem 
+                                button
+                                value={technician.first_name + ' ' + technician.last_name} 
+                                id={technician.id} 
+                                onClick={() => {
+                                setCurrentTechnicianName(technician.first_name + ' ' + technician.last_name);
+                                setCurrentTechnicianId(technician.id);
+                                handleGetMessages(userId,technician.id)}}
+                            >
+                                <ListItemIcon>
+                                    <Avatar alt="Remy Sharp"  />
+                                </ListItemIcon>
+                                <ListItemText primary={technician.first_name + ' ' + technician.last_name}></ListItemText>
+                            </ListItem>
+                        )
+                    })}
+                    {instantMessages.map((message) => {
+                        return(
+                        <ListItem id={message.id}>
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <ListItemText align={message.sent_by_user === 0 ? "right" : "left" }>{message.content}</ListItemText>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <ListItemText align={message.sent_by_user === 0 ? "right" : "left" } secondary={message.created_at.substr(11, 5)}></ListItemText>
+                                </Grid>
+                            </Grid>
+                        </ListItem>
+                        )
+                    })}
                 </List>
             </Grid>
             <Grid item xs={9}>
-                {chooseChat()}
+            <List className={classes.messageArea}>
+            <Typography className={classes.messagesName} variant="h6" primary =" Omar Kabbara">
+            &nbsp;{currentTechnicianName}
+            </Typography>
+            <Divider />
+                    {technicianMessages.map((message) => {
+                        return(
+                        <ListItem id={message.id}>
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <ListItemText align={message.sent_by_user === 1 ? "right" : "left" }>{message.content}</ListItemText>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <ListItemText align={message.sent_by_user === 1 ? "right" : "left" } secondary={message.created_at.substr(11, 5)}></ListItemText>
+                                </Grid>
+                            </Grid>
+                        </ListItem>
+                        )
+                    })}    
+                </List>
                 <Divider />
                 <Grid container style={{padding: '20px'}}>
                     <Grid item xs={11}>
                         <TextField 
                         id="messageField" 
                         value={newMessage}
-                        onKeyPress={handleEnterSendKeypress}
                         onChange={e => setNewMessage(e.target.value)} label="Type a message." fullWidth />
                     </Grid>
                     
@@ -410,4 +234,4 @@ const Chat = () => {
   );
 }
 
-export default Chat;
+export default CustomerChat;
