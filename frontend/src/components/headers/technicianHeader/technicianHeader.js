@@ -13,10 +13,11 @@ import {
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from "@material-ui/icons/Search";
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ChatIcon from '@material-ui/icons/Chat';
 import HelpIcon from '@material-ui/icons/Help';
 import TechnicianDropDownMenu from './technicianDropDownMenu';
+import NotificationsDropDownMenu from './notifications';
+
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -70,18 +71,18 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-const customerHeaderData = [
-  {
+const technicianHeaderData = [
+  /* {
     label: "All Tradesmen",
     href: "/alltradesmen",
-  },
-  {
+  }, */
+  /* {
     label: <HelpIcon ></HelpIcon>,
     href: "/help",
-  },
+  }, */
   {
-    label: <NotificationsIcon></NotificationsIcon>,
-    href: "/notifications",
+    label: <ChatIcon ></ChatIcon>,
+    href: "/tradesman/messages",
   },
 ];
 
@@ -130,6 +131,7 @@ export default function TechnicianHeader() {
           </div>
       <div className={classes.rightSideButtons}>   
         <div>{getMenuButtons()}</div>
+        <NotificationsDropDownMenu />
         <TechnicianDropDownMenu></TechnicianDropDownMenu> 
       </div>  
       </Toolbar>
@@ -138,12 +140,12 @@ export default function TechnicianHeader() {
   
   const TechieFindLogo = (
     <Typography variant="h6" component="h1" className={logo}>
-      TechieFind
+      TradieFind
     </Typography> 
     );
 
   const getMenuButtons = () => {
-    return customerHeaderData.map(({label, href}) => {
+    return technicianHeaderData.map(({label, href}) => {
       return (
         <Button
           {...{
