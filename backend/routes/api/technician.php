@@ -6,6 +6,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MessageController;
+
 
 
 
@@ -27,7 +29,14 @@ Route::group( ['prefix' => 'technician','middleware' => ['auth:technician-api','
    // authenticated technician routes here
    Route::post('appointments/approve',[AppointmentsController::class, 'approve']);
    Route::post('appointments',[AppointmentsController::class, 'index']);
+   Route::post('deleteappointment',[AppointmentsController::class, 'destroy']);
+   Route::put('editappointment',[AppointmentsController::class, 'update']);
+
    Route::post('profile',[ProfileController::class, 'technicianProfile']);
+
+   Route::post('sendmessage', [MessageController::class, 'technicianStore']);
+   Route::post('allmessages', [MessageController::class, 'getOneToOneMessages']);
+   Route::post('users', [MessageController::class, 'getUsers']);
 
 
 });
