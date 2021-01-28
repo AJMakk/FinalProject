@@ -75,10 +75,10 @@ const guestHeaderData = [
     label: "All Tradesmen",
     href: "/guest/alltradesmen",
   },
-  {
+  /* {
     label: <HelpIcon ></HelpIcon>,
     href: "/help",
-  },
+  }, */
   {
     label: "Log In",
     href: "/login",
