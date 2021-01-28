@@ -49,17 +49,6 @@ export default function NotificationsDropDownMenu() {
     setNotificationsLength(holderNotif.length);
   })
 
-  let history = useHistory();
-
-  const handleProfile = () => {
-    history.push("/customer/profile")
-    handleToggle()
-  }
-
-  const handleAppointments = (event) => {
-    history.push("/customer/myappointments")
-    handleToggle()
-  }
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
