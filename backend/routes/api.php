@@ -20,11 +20,6 @@ use App\Models\Technician;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('/register', [CustomerAuthController::class,'register']);
 Route::post('/login', [CustomerAuthController::class,'login']);
 Route::get('/logout', [CustomerAuthController::class,'logout']);
 
@@ -32,9 +27,7 @@ Route::get('/cities', [CityController::class,'index']);
 Route::get('/categories', [CategoryController::class,'index']);
 
 Route::get('/technicians', [TechnicianController::class,'index']);
+Route::post('/technicians/search', [TechnicianController::class,'search']);
 Route::get('/technicians/{technician}', [TechnicianController::class,'show']);
 
 
-
-/* Route::apiResource('/cities', CityController::class)->middleware('auth:api');
- */
