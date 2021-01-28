@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Events\AppointmentWasCancelled;
 use App\Models\Appointment;
 use App\Http\Resources\AppointmentResource;
+use Carbon\Carbon;
+
 
 
 
@@ -34,6 +36,28 @@ class AppointmentsController extends Controller
         {
             $appointments = Appointment::where('user_id',$request->user_id)->get();
         }
+
+        return response (['appointments' => AppointmentResource::collection($appointments), 'message' => 'Retrieved successfully'], 200);
+    }
+
+    public function previousAppointments(Request $request)
+    {
+        $todayDate = Carbon::today();
+
+
+        $appointments = Appointment::orderBy('endDate', 'desc')
+        ->where('user_id',$request->user_id)
+        ->where('rated',false)
+        ->latest()
+        ->whereDate('endDate', '<', $todayDate)
+        ->get();
+        foreach ($appointments as $ap)
+        {
+            $ap->technician;
+
+        }
+        unset($ap);
+
 
         return response (['appointments' => AppointmentResource::collection($appointments), 'message' => 'Retrieved successfully'], 200);
     }
@@ -82,7 +106,12 @@ class AppointmentsController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        $appointment->update($request->all());
+        $appointment = Appointment::find($request->id);
+        $appointment->title = $request->title;
+        $appointment->startDate = $request->startDate;
+        $appointment->endDate = $request->endDate;
+        $appointment->location = $request->location;
+        $appointment->update(); // $note->update();
 
         return response([ 'appointment' => new AppointmentResource($appointment), 'message' => 'Retrieved Successfuly'],200);
     }
