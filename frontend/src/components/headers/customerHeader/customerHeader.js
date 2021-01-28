@@ -83,13 +83,13 @@ const customerHeaderData = [
     label: "All Tradesmen",
     href: "/alltradesmen",
   },
-  {
+  /* {
     label: <HelpIcon ></HelpIcon>,
     href: "/help",
-  },
+  }, */
   {
     label: <ChatIcon ></ChatIcon>,
-    href: "/customer/1/messages",
+    href: "/customer/messages",
   },
 
 ];
