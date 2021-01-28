@@ -1,4 +1,5 @@
 import React, {useEffect,useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -19,24 +20,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import api from '../../../../api';
-import SimpleRating from './ratings';
+import Link from '@material-ui/core/Link';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
-function createData(name, speciality, rating, city, schedule) {
-  return { name, speciality, rating, city, schedule };
+
+
+function createData(name, speciality, rating, city, id) {
+  return { name, speciality, rating, city, id };
 }
 
-const rows = [];
-
-const getAllTechniciansData= async () => {
-    await api.getAllTechnicians().then(res => {
-    const techData = res.data.technicians;
-    techData.forEach(obj=>{
-    rows.push(createData(obj.first_name + ' '+ obj.last_name, obj.category.name, obj.ratings, obj.city.city, 'check'))
-    })
-    })
-  
-
-}
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -68,7 +61,7 @@ const headCells = [
   { id: 'speciality', numeric: false, disablePadding: false, label: 'Speciality' },
   { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
-  { id: 'schedule', numeric: false, disablePadding: false, label: 'Schedule' },
+  { id: 'Appointment', numeric: false, disablePadding: false, label: 'Appointment' },
 ];
 
 function EnhancedTableHead(props) {
@@ -170,7 +163,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop:theme.spacing(10),
     marginBottom: theme.spacing(2),
-    background:'none',
+    opacity:'0.75',
   },
   table: {
     minWidth: 750,
@@ -188,14 +181,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AllTechniciansTable() {
+export default function ApprovalAppointments() {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('rating');
   const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
+  const [dense, setDense] = useState(true);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rows, setRows] = useState([]);
 
+  const holderData = [];
+
+  const getAllTechniciansData= async () => {
+    await api.getAllTechnicians().then(res => {
+    const techData = res.data.technicians;
+    techData.forEach(obj=>{
+    holderData.push(createData(obj.first_name + ' '+ obj.last_name, obj.category.name, obj.ratings, obj.city.city, obj.id))
+    })
+    })
+    setRows(holderData);
+    console.log('rows: ', rows)
+}
   useEffect(() => {
     if(!rows.length) {
       getAllTechniciansData();
@@ -221,6 +227,11 @@ export default function AllTechniciansTable() {
     setDense(event.target.checked);
   };
 
+  let history = useHistory();
+
+  const preventDefault = () => {
+    history.push('/tradesman/schedule')
+  }
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -262,9 +273,19 @@ export default function AllTechniciansTable() {
                         {row.name}
                       </TableCell>
                       <TableCell align="left">{row.speciality}</TableCell>
-                      <TableCell align="center"><SimpleRating /></TableCell>
+                      <TableCell align="center">
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                          <Rating name="read-only" value={row.rating} readOnly />
+                        </Box>
+                      </TableCell>
                       <TableCell align="left">{row.city}</TableCell>
-                      <TableCell align="left">{row.schedule}</TableCell>
+                      <TableCell align="left"><Link component="button" variant="body2" onClick={() => { 
+                        history.push('/' + row.id + '/requestappointment');}}
+                        >
+                          Request
+                        </Link>
+                      
+                      </TableCell>
                     </TableRow>
                   );
                 })}
