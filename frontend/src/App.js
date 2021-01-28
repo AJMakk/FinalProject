@@ -23,18 +23,16 @@ import CustomerHome from './components/pages/home/customerHome';
 import TechnicianHome from './components/pages/home/technicianHome';
 import AllTechniciansTable from './components/pages/customers/search/allTechnicians';
 import Results from './components/pages/customers/search/results';
-import Appointments from './components/pages/customers/appointments/schedule';
 import CustomerProfile  from './components/pages/customers/profile/profile';
 import TechnicianProfile  from './components/pages/technicians/profiles/profile';
-import TechnicianSchedule from './components/pages/technicians/appointments/schedule';
-import Demo from './components/pages/customers/appointments/schedule2';
 import RequestAppointment from './components/pages/customers/search/requestAppointment';
 import ApprovalAppointments from './components/pages/technicians/appointments/approvalAppointments';
-import Echo from 'laravel-echo';
-import Pusher from "pusher-js";
 import GuestAllTechnicians from './components/headers/guestHeader/allTechnicians';
 import CompletedAppointments from './components/pages/customers/appointments/completedAppointments';
-import Chat from './components/pages/customers/chat/chat';
+import CustomerSchedule from './components/pages/customers/appointments/schedule';
+import TechnicianSchedule from './components/pages/technicians/appointments/schedule';
+import CustomerChat from './components/pages/customers/chat/chat';
+import TechnicianChat from './components/pages/technicians/chat/chat';
 
 
 
@@ -98,7 +96,7 @@ function App() {
                   <Results></Results>
                </Route>
                <Route exact path="/customer/myappointments">
-                  <Demo></Demo>
+                  <CustomerSchedule></CustomerSchedule>
                </Route>
                <Route exact path="/customer/profile">
                   <CustomerProfile></CustomerProfile>
@@ -118,8 +116,11 @@ function App() {
                <Route exact path="/customer/completedappointments">
                   <CompletedAppointments></CompletedAppointments>
                </Route>
-               <Route exact path="/customer/1/messages">
-                  <Chat></Chat>
+               <Route exact path="/customer/messages">
+                  <CustomerChat></CustomerChat>
+               </Route>
+               <Route exact path="/tradesman/messages">
+                  <TechnicianChat></TechnicianChat>
                </Route>
             </Switch>
       </Router>
