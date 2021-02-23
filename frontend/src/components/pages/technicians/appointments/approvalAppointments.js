@@ -1,5 +1,4 @@
 import React, {useEffect,useState} from 'react';
-import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -21,9 +20,6 @@ import Switch from '@material-ui/core/Switch';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import api from '../../../../api';
 import Button from '@material-ui/core/Button';
-
-
-
 
 function createData(id, name, description, location, startDate, endDate, approved) {
   return { id, name, description, location, startDate, endDate, approved };
@@ -265,8 +261,6 @@ export default function AllTechniciansTable() {
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
-
-  let history = useHistory();
 
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
