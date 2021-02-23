@@ -53,7 +53,7 @@ export default {
 
     requestAppointment: (appointment) =>
         axios.post(`${BASE_API_URL}/user/requestappointment`,{title:appointment.title, startDate:appointment.startDate, endDate:appointment.endDate, 
-            location:appointment.location, user_id:appointment.userId, technician_id:appointment.techId, approved:appointment.approved} , getCustomerTokenFromStorage),
+            location:appointment.location, user_id:appointment.userId, technician_id:appointment.techId, approved:appointment.approved, rated:appointment.rated} , getCustomerTokenFromStorage),
     
     approveAppointment: (id) =>
         axios.post(`${BASE_API_URL}/technician/appointments/approve`,{id:id.id} , getTechnicianTokenFromStorage),
