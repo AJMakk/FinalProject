@@ -77,7 +77,8 @@ class AppointmentsController extends Controller
             'location'=> 'required',
             'user_id'=>'required|max:100',
             'technician_id'=>'required|max:100',
-            'approved'=>'required|boolean'
+            'approved'=>'required|boolean',
+            'rated'=>'required'
         ]);
 
         $appointment = Appointment::create($validatedData);
