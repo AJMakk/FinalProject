@@ -13,24 +13,29 @@ import GuestHeader from './components/headers/guestHeader/guestHeader';
 import CustomerHeader from './components/headers/customerHeader/customerHeader';
 import TechnicianHeader from './components/headers/technicianHeader/technicianHeader';
 
-
 import Login from './components/pages/logIn';
 import CustomerRegister from './components/pages/customers/register/register';
 import TechnicianRegister from './components/pages/technicians/register/register';
 import Logout from './components/pages/logOut';
+
 import GuestHome from './components/pages/home/guestHome';
 import CustomerHome from './components/pages/home/customerHome';
 import TechnicianHome from './components/pages/home/technicianHome';
+
 import AllTechniciansTable from './components/pages/customers/search/allTechnicians';
+import GuestAllTechnicians from './components/headers/guestHeader/allTechnicians';
 import Results from './components/pages/customers/search/results';
+
 import CustomerProfile  from './components/pages/customers/profile/profile';
 import TechnicianProfile  from './components/pages/technicians/profiles/profile';
+
 import RequestAppointment from './components/pages/customers/search/requestAppointment';
 import ApprovalAppointments from './components/pages/technicians/appointments/approvalAppointments';
-import GuestAllTechnicians from './components/headers/guestHeader/allTechnicians';
 import CompletedAppointments from './components/pages/customers/appointments/completedAppointments';
+
 import CustomerSchedule from './components/pages/customers/appointments/schedule';
 import TechnicianSchedule from './components/pages/technicians/appointments/schedule';
+
 import CustomerChat from './components/pages/customers/chat/chat';
 import TechnicianChat from './components/pages/technicians/chat/chat';
 
